@@ -29,6 +29,8 @@
 #ifndef NANOSVG_H
 #define NANOSVG_H
 
+#include <math.h>
+
 #ifdef _MSC_VER
 #if (_MSC_VER <= 1200)
 #define acosf(x)    ((float)acos((double)(x)))
