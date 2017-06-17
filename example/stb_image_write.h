@@ -54,6 +54,10 @@ USAGE:
 #ifndef INCLUDE_STB_IMAGE_WRITE_H
 #define INCLUDE_STB_IMAGE_WRITE_H
 
+//#if defined(_WIN32)
+//#pragma warning(disable:4996)
+//#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
