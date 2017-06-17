@@ -54,9 +54,9 @@ USAGE:
 #ifndef INCLUDE_STB_IMAGE_WRITE_H
 #define INCLUDE_STB_IMAGE_WRITE_H
 
-//#if defined(_WIN32)
-//#pragma warning(disable:4996)
-//#endif
+#if defined(_WIN32)
+#pragma warning(disable:4996)
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -90,11 +90,11 @@ static void writefv(FILE *f, const char *fmt, va_list v)
          case ' ': break;
          case '1': { unsigned char x = (unsigned char) va_arg(v, int); fputc(x,f); break; }
          case '2': { int x = va_arg(v,int); unsigned char b[2];
-                     b[0] = (unsigned char) x; b[1] = (unsigned char) (x>>8);
+                     b[0] = x&0xFF; b[1] = (x>>8)&0xFF;
                      fwrite(b,2,1,f); break; }
          case '4': { stbiw_uint32 x = va_arg(v,int); unsigned char b[4];
-                     b[0]=(unsigned char)x; b[1]=(unsigned char)(x>>8);
-                     b[2]=(unsigned char)(x>>16); b[3]=(unsigned char)(x>>24);
+                     b[0]=x&0xFF; b[1]=(x>>8)&0xFF;
+                     b[2]=(x>>16)&0xFF; b[3]=(x>>24)&0xFF;
                      fwrite(b,4,1,f); break; }
          default:
             assert(0);
@@ -214,7 +214,7 @@ static void *stbi__sbgrowf(void **arr, int increment, int itemsize)
 static unsigned char *stbi__zlib_flushf(unsigned char *data, unsigned int *bitbuffer, int *bitcount)
 {
    while (*bitcount >= 8) {
-      stbi__sbpush(data, (unsigned char) *bitbuffer);
+      stbi__sbpush(data, *bitbuffer&0xFF);
       *bitbuffer >>= 8;
       *bitcount -= 8;
    }
@@ -357,10 +357,10 @@ unsigned char * stbi_zlib_compress(unsigned char *data, int data_len, int *out_l
          j += blocklen;
          blocklen = 5552;
       }
-      stbi__sbpush(out, (unsigned char) (s2 >> 8));
-      stbi__sbpush(out, (unsigned char) s2);
-      stbi__sbpush(out, (unsigned char) (s1 >> 8));
-      stbi__sbpush(out, (unsigned char) s1);
+      stbi__sbpush(out, (s2 >> 8)&0xFF);
+      stbi__sbpush(out, s2&0xFF);
+      stbi__sbpush(out, (s1 >> 8)&0xFF);
+      stbi__sbpush(out, s1&0xFF);
    }
    *out_len = stbi__sbn(out);
    // make returned pointer freeable
@@ -383,8 +383,8 @@ unsigned int stbi__crc32(unsigned char *buffer, int len)
 }
 
 #define stbi__wpng4(o,a,b,c,d) ((o)[0]=(unsigned char)(a),(o)[1]=(unsigned char)(b),(o)[2]=(unsigned char)(c),(o)[3]=(unsigned char)(d),(o)+=4)
-#define stbi__wp32(data,v) stbi__wpng4(data, (v)>>24,(v)>>16,(v)>>8,(v));
-#define stbi__wptag(data,s) stbi__wpng4(data, s[0],s[1],s[2],s[3])
+#define stbi__wp32(data,v) stbi__wpng4(data, ((v)>>24)&0xFF,((v)>>16)&0xFF,((v)>>8)&0xFF,(v)&0xFF);
+#define stbi__wptag(data,s) stbi__wpng4(data, s[0]&0xFF,s[1]&0xFF,s[2]&0xFF,s[3]&0xFF)
 
 static void stbi__wpcrc(unsigned char **data, int len)
 {

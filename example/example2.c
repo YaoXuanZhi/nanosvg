@@ -59,7 +59,11 @@ int main()
 	nsvgRasterize(rast, image, 0,0,1, img, w, h, w*4);
 
 	printf("writing svg.png\n");
- 	stbi_write_png("svg.png", w, h, 4, img, w*4);
+	stbi_write_png("svg.png", w, h, 4, img, w*4);
+	printf("writing svg.bmp\n");
+	stbi_write_bmp("svg.bmp", w, h, 4, img);
+	printf("writing svg.tga\n");
+	stbi_write_tga("svg.tga", w, h, 4, img);
 
 error:
 	nsvgDeleteRasterizer(rast);
