@@ -25,12 +25,16 @@
 #ifndef NANOSVGRAST_H
 #define NANOSVGRAST_H
 
+#ifndef NSVG_INLINE
+#if defined(_MSC_VER) && !defined(__cplusplus)
+#define NSVG_INLINE __inline  
+#else
+#define NSVG_INLINE inline  
+#endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
-#else
-#if defined(_WIN32) && !defined(__cplusplus)
-#define inline __inline  
-#endif  
 #endif
 
 typedef struct NSVGrasterizer NSVGrasterizer;
@@ -978,7 +982,7 @@ static unsigned int nsvg__applyOpacity(unsigned int c, float u)
 	return nsvg__RGBA((unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a);
 }
 
-static inline int nsvg__div255(int x)
+static NSVG_INLINE int nsvg__div255(int x)
 {
     return ((x+1) * 257) >> 16;
 }

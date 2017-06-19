@@ -29,6 +29,56 @@
 #ifndef NANOSVG_H
 #define NANOSVG_H
 
+#if defined(_WIN32) && defined(_MSC_VER)
+	#pragma warning (disable: 4996) // Switch off security warnings
+	#pragma warning (disable: 4100) // Switch off unreferenced formal parameter warnings
+	#pragma warning (disable: 4201) // Switch off "nonstandard extension used : nameless struct/union" warnings
+	#pragma warning (disable: 4127) // Switch off "conditional expression is constant" warnings
+	#pragma warning (disable: 4204) // Switch off "nonstandard extension used : non-constant aggregate initializer" warnings
+#endif
+
+#ifndef NSVG_INLINE
+#if defined(_MSC_VER) && !defined(__cplusplus)
+#define NSVG_INLINE __inline  
+#else
+#define NSVG_INLINE inline  
+#endif
+#endif
+
+#ifndef sqrtf
+#define sqrtf(x)    ((float)sqrt((double)(x)))
+#endif
+#ifndef tanf
+#define tanf(x)     ((float)tan((double)(x)))
+#endif
+#ifndef sinf
+#define sinf(x)     ((float)sin((double)(x)))
+#endif
+#ifndef powf
+#define powf(x,y)   ((float)pow((double)(x), (double)(y)))
+#endif
+#ifndef fabsf
+#define fabsf(x)    ((float)fabs((double)(x)))
+#endif
+#ifndef acosf
+#define acosf(x)    ((float)acos((double)(x)))
+#endif
+#ifndef fmodf
+#define fmodf(x,y)  ((float)fmod((double)(x), (double)(y)))
+#endif
+#ifndef ceilf
+#define ceilf(x)    ((float)ceil((double)(x)))
+#endif
+#ifndef atan2f
+#define atan2f(y,x) ((float)atan2((double)(y), (double)(x)))
+#endif
+#ifndef floorf
+#define floorf(x)   ((float)floor((double)(x)))
+#endif
+#ifndef cosf
+#define cosf(x)     ((float)cos((double)(x)))
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -172,33 +222,7 @@ void nsvgDelete(NSVGimage* image);
 
 #ifdef __cplusplus
 }
-#else
-#ifdef _MSC_VER
-#if (_MSC_VER <= 1200)
-#define acosf(x)    ((float)acos((double)(x)))
-#define asinf(x)    ((float)asin((double)(x)))
-#define atanf(x)    ((float)atan((double)(x)))
-#define atan2f(y,x) ((float)atan2((double)(y), (double)(x)))
-#define ceilf(x)    ((float)ceil((double)(x)))
-#define cosf(x)     ((float)cos((double)(x)))
-#define coshf(x)    ((float)cosh((double)(x)))
-#define expf(x)     ((float)exp((double)(x)))
-#define floorf(x)   ((float)floor((double)(x)))
-#define fmodf(x,y)  ((float)fmod((double)(x), (double)(y)))
-#define logf(x)     ((float)log((double)(x)))
-#define log10f(x)   ((float)log10((double)(x)))
-#define modff(x,y)  ((float)modf((double)(x), (double *)(y)))
-#define powf(x,y)   ((float)pow((double)(x), (double)(y)))
-#define sinf(x)     ((float)sin((double)(x)))
-#define sinhf(x)    ((float)sinh((double)(x)))
-#define sqrtf(x)    ((float)sqrt((double)(x)))
-#define tanf(x)     ((float)tan((double)(x)))
-#define tanhf(x)    ((float)tanh((double)(x)))
-#define fabsf(x)    ((float)fabs((double)(x)))
 #endif
-#endif
-#endif
-
 #endif // NANOSVG_H
 
 #ifdef NANOSVG_IMPLEMENTATION
@@ -219,19 +243,6 @@ void nsvgDelete(NSVGimage* image);
 
 #define NSVG_NOTUSED(v) do { (void)(1 ? (void)0 : ( (void)(v) ) ); } while(0)
 #define NSVG_RGB(r, g, b) (((unsigned int)r) | ((unsigned int)g << 8) | ((unsigned int)b << 16))
-
-#ifdef _MSC_VER
-	#pragma warning (disable: 4996) // Switch off security warnings
-	#pragma warning (disable: 4100) // Switch off unreferenced formal parameter warnings
-	#ifdef __cplusplus
-	#define NSVG_INLINE inline
-	#else
-	#define NSVG_INLINE
-	#endif
-#else
-	#define NSVG_INLINE inline
-#endif
-
 
 static int nsvg__isspace(char c)
 {

@@ -20,7 +20,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\example\example2.c">
+    <ClCompile Include="..\example\example2.cpp">
       <Filter>example</Filter>
     </ClCompile>
   </ItemGroup>
