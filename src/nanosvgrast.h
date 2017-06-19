@@ -25,14 +25,12 @@
 #ifndef NANOSVGRAST_H
 #define NANOSVGRAST_H
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+extern "C" {
+#else
 #if defined(_WIN32) && !defined(__cplusplus)
 #define inline __inline  
 #endif  
-#endif
-
-#ifdef __cplusplus
-extern "C" {
 #endif
 
 typedef struct NSVGrasterizer NSVGrasterizer;

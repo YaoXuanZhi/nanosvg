@@ -29,33 +29,6 @@
 #ifndef NANOSVG_H
 #define NANOSVG_H
 
-#include <math.h>
-
-#ifdef _MSC_VER
-#if (_MSC_VER <= 1200)
-#define acosf(x)    ((float)acos((double)(x)))
-#define asinf(x)    ((float)asin((double)(x)))
-#define atanf(x)    ((float)atan((double)(x)))
-#define atan2f(y,x) ((float)atan2((double)(y), (double)(x)))
-#define ceilf(x)    ((float)ceil((double)(x)))
-#define cosf(x)     ((float)cos((double)(x)))
-#define coshf(x)    ((float)cosh((double)(x)))
-#define expf(x)     ((float)exp((double)(x)))
-#define floorf(x)   ((float)floor((double)(x)))
-#define fmodf(x,y)  ((float)fmod((double)(x), (double)(y)))
-#define logf(x)     ((float)log((double)(x)))
-#define log10f(x)   ((float)log10((double)(x)))
-#define modff(x,y)  ((float)modf((double)(x), (double *)(y)))
-#define powf(x,y)   ((float)pow((double)(x), (double)(y)))
-#define sinf(x)     ((float)sin((double)(x)))
-#define sinhf(x)    ((float)sinh((double)(x)))
-#define sqrtf(x)    ((float)sqrt((double)(x)))
-#define tanf(x)     ((float)tan((double)(x)))
-#define tanhf(x)    ((float)tanh((double)(x)))
-#define fabsf(x)    ((float)fabs((double)(x)))
-#endif
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -199,6 +172,31 @@ void nsvgDelete(NSVGimage* image);
 
 #ifdef __cplusplus
 }
+#else
+#ifdef _MSC_VER
+#if (_MSC_VER <= 1200)
+#define acosf(x)    ((float)acos((double)(x)))
+#define asinf(x)    ((float)asin((double)(x)))
+#define atanf(x)    ((float)atan((double)(x)))
+#define atan2f(y,x) ((float)atan2((double)(y), (double)(x)))
+#define ceilf(x)    ((float)ceil((double)(x)))
+#define cosf(x)     ((float)cos((double)(x)))
+#define coshf(x)    ((float)cosh((double)(x)))
+#define expf(x)     ((float)exp((double)(x)))
+#define floorf(x)   ((float)floor((double)(x)))
+#define fmodf(x,y)  ((float)fmod((double)(x), (double)(y)))
+#define logf(x)     ((float)log((double)(x)))
+#define log10f(x)   ((float)log10((double)(x)))
+#define modff(x,y)  ((float)modf((double)(x), (double *)(y)))
+#define powf(x,y)   ((float)pow((double)(x), (double)(y)))
+#define sinf(x)     ((float)sin((double)(x)))
+#define sinhf(x)    ((float)sinh((double)(x)))
+#define sqrtf(x)    ((float)sqrt((double)(x)))
+#define tanf(x)     ((float)tan((double)(x)))
+#define tanhf(x)    ((float)tanh((double)(x)))
+#define fabsf(x)    ((float)fabs((double)(x)))
+#endif
+#endif
 #endif
 
 #endif // NANOSVG_H
@@ -820,7 +818,6 @@ static float nsvg__convertToPixels(NSVGparser* p, NSVGcoordinate c, float orig, 
 		case NSVG_UNITS_EM:			return c.value * attr->fontSize;
 		case NSVG_UNITS_EX:			return c.value * attr->fontSize * 0.52f; // x-height of Helvetica.
 		case NSVG_UNITS_PERCENT:	return orig + c.value / 100.0f * length;
-		//default:					return c.value;
 	}
 	return c.value;
 }
